@@ -1,0 +1,28 @@
+sencha-ListActions
+==================
+
+This is a plugin that adds the ability to easily execute actions on multiple
+items in a list.  The behavior is modelled after the iOS mail application's
+"edit" function.
+
+While this plugin is working and fully usable, it is a work in progress, so
+things will change and some stuff might not work properly.  If you find a bug,
+open an issue and I'll try to fix it--or even better, submit a patch or pull
+request.
+
+For screenshots and a video of how this plugin works, check out the forum post:
+http://www.sencha.com/forum/showthread.php?251440-ListActions-Plugin
+
+
+Usage
+-----
+
+For more documentation, check the actual plugin file, but basic usage is
+simple.  You can add this plugin to an existing list by doing the following:
+
+    plugins: [{
+        xclass: 'Ext.ux.plugin.ListActions'
+    }]
+
+To see all configuration options, take a look at the source as it is mostly
+documented.
