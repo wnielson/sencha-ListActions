@@ -35,7 +35,7 @@
  *                  
  *                      // The event 'listactiondelete' will be fired on the
  *                      // associated @{link Ext.List}.
- *                      eventName: 'delete'
+ *                      autoEvent: 'delete'
  *                  }]
  *              },
  *              // This is an optional configuration value for controlling the
@@ -169,9 +169,10 @@ Ext.define('Ext.ux.plugin.ListActions', {
         );
 
         // These methods are added to the associated list for convinience
-        list.enableActions  = Ext.Function.bind(me.doSetEnabled, me, [true]);
-        list.disableActions = Ext.Function.bind(me.doSetEnabled, me, [false]);
-        list.toggleActions  = Ext.Function.bind(me.doSetEnabled, me, [null]);
+        list.enableActions      = Ext.Function.bind(me.doSetEnabled, me, [true]);
+        list.disableActions     = Ext.Function.bind(me.doSetEnabled, me, [false]);
+        list.toggleActions      = Ext.Function.bind(me.doSetEnabled, me, [null]);
+        list.getActionsEnabled  = Ext.Function.bind(me.isEnabled, me);
 
         list.addListener('select',   me.onItemSelect, me);
         list.addListener('deselect', me.onItemSelect, me);
@@ -205,9 +206,9 @@ Ext.define('Ext.ux.plugin.ListActions', {
         me._actionsToolbar = list.add(actionsToolbar);
 
         Ext.each(me._actionsToolbar.query('button'), function(button) {
-            if (Ext.isDefined(button.eventName)) {
-                button.addListener('tap', function() {
-                    list.fireEvent('listaction'+button.eventName, list);
+            if (button.getAutoEvent()) {
+                button.addListener('release', function() {
+                    list.fireEvent('listaction'+button.getAutoEvent().name, list);
                 });
             }
         });
@@ -322,6 +323,11 @@ Ext.define('Ext.ux.plugin.ListActions', {
         }
     },
 
+    isEnabled: function() {
+        var list = this.getList();
+        return list.element.hasCls('x-list-plugin-listaction-enabled');
+    },
+
     /**
      *  @private
      *
@@ -382,7 +388,6 @@ Ext.define('Ext.ux.plugin.ListActions', {
             }
             
             if (config.button) {
-
                 config.button.addListener('tap',    me.toggleActionButton, me);
                 list.addListener('actionsdisabled', me.toggleActionButton, me);
                 list.addListener('actionsenabled',  me.toggleActionButton, me);
