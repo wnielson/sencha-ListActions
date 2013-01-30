@@ -384,7 +384,11 @@ Ext.define('Ext.ux.plugin.ListActions', {
             }
 
             if (!config.button) {
-                config.button = config.selector(list);
+                if (Ext.isFunction(config.selector)) {
+                    config.button = config.selector(list);
+                } else {
+                    config.button = list.down(config.selector);
+                }
             }
             
             if (config.button) {

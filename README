@@ -2,7 +2,7 @@ sencha-ListActions
 ==================
 
 This is a plugin that adds the ability to easily execute actions on multiple
-items in a list.  The behavior is modelled after the iOS mail application's
+items in a list.  The behavior is modeled after the iOS mail application's
 "edit" function.
 
 While this plugin is working and fully usable, it is a work in progress, so
@@ -26,3 +26,8 @@ simple.  You can add this plugin to an existing list by doing the following:
 
 To see all configuration options, take a look at the source as it is mostly
 documented.
+
+You'll also need to add some CSS.  Look at the source code in app/index.html
+for an example.  By default the 'check2' icon is used when an item is selected,
+which is not included by default.  In order to get the check mark to display, you
+need to edit your sass style sheet and add ``@include pictos-iconmask('check2');``.
