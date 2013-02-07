@@ -32,7 +32,7 @@
  *                      // Any button with a string like "(0)" will display the
  *                      // current number of selected items
  *                      text: 'Delete (0)',
- *                  
+ *
  *                      // The event 'listactiondelete' will be fired on the
  *                      // associated @{link Ext.List}.
  *                      autoEvent: 'delete'
@@ -103,7 +103,7 @@ Ext.define('Ext.ux.plugin.ListActions', {
          *  @cfg {Integer} maxButtonDisplayCount
          *  If more than this number of items are selected, then the actio button
          *  text will display `maxButtonDisplayCount-1` and a "+".  For example, if
-         *  100 items are selected, and `maxButtonDisplayCount` is set to `99`, 
+         *  100 items are selected, and `maxButtonDisplayCount` is set to `99`,
          *  "(99+)" will be displayed instead of "(100)".
          */
         maxButtonDisplayCount: 99,
@@ -156,7 +156,8 @@ Ext.define('Ext.ux.plugin.ListActions', {
     },
 
     init: function(list) {
-        var me = this;
+        var me = this,
+            actionsToolbar;
 
         me.setList(list);
 
@@ -229,6 +230,8 @@ Ext.define('Ext.ux.plugin.ListActions', {
      *  This keeps the viewable items in sync.
      */
     doUpdateListItem: function(item, index, info) {
+        var offsetX;
+
         if (this.getEnabled()) {
             if (!Ext.DomQuery.selectNode('.x-button-select', item.element.dom)) {
                 // only add a button if we don't have one already
@@ -261,8 +264,10 @@ Ext.define('Ext.ux.plugin.ListActions', {
     doSetEnabled: function(enabled, suppress) {
         var me       = this,
             list     = this.getList(),
-            enabled  = Ext.isBoolean(enabled) ? enabled : !this.getEnabled(),
-            suppress = Ext.isBoolean(suppress)? suppress : false;
+            scrollToTopOnRefresh;
+
+        enabled  = Ext.isBoolean(enabled) ? enabled : !this.getEnabled();
+        suppress = Ext.isBoolean(suppress)? suppress : false;
 
         this.setEnabled(enabled);
 
@@ -291,12 +296,12 @@ Ext.define('Ext.ux.plugin.ListActions', {
     },
 
     doShowItemAnimation: function(item) {
-        el = Ext.DomQuery.selectNode(".x-inner.x-list-item-inner", item.element.dom);
+        var el = Ext.DomQuery.selectNode(".x-inner.x-list-item-inner", item.element.dom);
         this._showAnimation.run(el);
     },
 
     doHideItemAnimation: function(item) {
-        el = Ext.DomQuery.selectNode(".x-inner.x-list-item-inner", item.element.dom);
+        var el = Ext.DomQuery.selectNode(".x-inner.x-list-item-inner", item.element.dom);
         this._hideAnimation.run(el);
     },
 
@@ -337,7 +342,8 @@ Ext.define('Ext.ux.plugin.ListActions', {
      *  number of currently selected items in the list.
      */
     updateActionButtonsText: function(count) {
-        var me = this;
+        var me = this,
+            text;
 
         Ext.each(this._actionsToolbar.query('button'), function(button) {
             text = button.getText();
@@ -416,7 +422,7 @@ Ext.define('Ext.ux.plugin.ListActions', {
     },
 
     toggleActionButton: function(el) {
-        var list            = this.getList();
+        var list            = this.getList(),
             toggleActions   = true,
             config          = this.getActionToggleButton(),
             button          = this.getActionToggleButtonEl();
@@ -429,7 +435,7 @@ Ext.define('Ext.ux.plugin.ListActions', {
             toggleActions = false;
         }
 
-        if (button.getText() == config.enableText) {
+        if (button.getText() === config.enableText) {
             if (toggleActions) {
                 list.enableActions();
             } else {
